@@ -5,17 +5,27 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Properties;
 
-/**
- * FAULTY "Singleton": public constructor, getInstance() returns a NEW instance each time,
- * not thread-safe, reload allowed anytime, mutable global state, reflection+serialization-friendly.
- */
 public class AppSettings implements Serializable {
     private final Properties props = new Properties();
 
-    public AppSettings() { } // should not be public for true singleton
+    // private constructor that handles reflection attacks and prevents creating multiple instances
+    private AppSettings() {
+        if (Holder.INSTANCE != null) {
+            throw new IllegalStateException("trying to create second instance using reflection, illegal move");
+        }
+    }
 
+    //inner class design pattern
+    private static class Holder{
+        static final AppSettings INSTANCE = new AppSettings();
+    }
     public static AppSettings getInstance() {
-        return new AppSettings(); // returns a fresh instance (bug)
+        return Holder.INSTANCE;
+    }
+
+    //using readResolve to preserve singleton property during deserialization and returning the same instance
+    protected Object readResolve() {
+        return getInstance();
     }
 
     public void loadFromFile(Path file) {
