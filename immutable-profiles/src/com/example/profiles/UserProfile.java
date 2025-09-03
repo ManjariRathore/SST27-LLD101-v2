@@ -1,6 +1,6 @@
 package com.example.profiles;
-
-public class UserProfile {
+//create the class final so it cannot be subclassed
+public final class UserProfile {
 
     // Refactored UserProfile to immutable, all fields are private and final with no setters.
     private final String id;
