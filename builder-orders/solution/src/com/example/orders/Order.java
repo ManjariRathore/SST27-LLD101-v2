@@ -1,5 +1,4 @@
 package com.example.orders;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -65,8 +64,8 @@ public final class Order {
         public Order build() {
             Objects.requireNonNull(id, "id");
             Objects.requireNonNull(customerEmail, "customerEmail");
-            if (!PricingRules.isValidEmail(customerEmail)) throw new IllegalArgumentException("invalid email");
-            if (!PricingRules.isValidDiscount(discountPercent)) throw new IllegalArgumentException("discount must be 0..100");
+            // if (!PricingRules.isValidEmail(customerEmail)) throw new IllegalArgumentException("invalid email");
+            // if (!PricingRules.isValidDiscount(discountPercent)) throw new IllegalArgumentException("discount must be 0..100");
             if (lines.isEmpty()) throw new IllegalArgumentException("at least one order line required");
             return new Order(this);
         }
