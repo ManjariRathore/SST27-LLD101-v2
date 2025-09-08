@@ -10,7 +10,7 @@ public class Demo {
 
         // Baseline behavior (already works)
         base.notify("Baseline email only.");
-
+        System.out.println("----");
         // === YOUR TASKS ===
         // 1) Create a base decorator class: NotifierDecorator implements Notifier and wraps another Notifier.
         // 2) Create concrete decorators:
@@ -29,5 +29,18 @@ public class Demo {
         //
         // Notifier full = new SlackDecorator(new WhatsAppDecorator(base, "user_wa"), "deployments");
         // full.notify("Deployment completed 🚀");
+
+        Notifier smsAndEmail = new SmsDecorator(base, "+91-99999-11111");
+        smsAndEmail.notify("sms and email");
+        System.out.println("----");
+
+        Notifier whatsappAndEmail = new WhatsAppDecorator(base, "user_wa");
+        whatsappAndEmail.notify("whatsapp and email");
+        System.out.println("----");
+
+        Notifier slackAndEmail = new SlackDecorator(base);
+        slackAndEmail.notify("slack and email");
+        System.out.println("----");
     }
+
 }
